@@ -1,11 +1,15 @@
 {
-  "name": "disco",
+  "name": "echleon",
   "version": "1.0.0",
   "description": "A bot aiming to change Discord's experience.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "author": "Caramel Drop",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "node-opus": "^0.3.3"
+  }
 }
