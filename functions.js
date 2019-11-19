@@ -22,5 +22,12 @@ module.exports = {
 
     formatDate: function(date) {
         return new Intl.DateTimeFormat('en-US').format(date)
+    },
+
+    warningEmbed: function(message) {
+        const embed = new RichEmbed()
+            .setColor("")
     }
+
+
 }

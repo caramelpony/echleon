@@ -11,10 +11,6 @@ client.commands = new Collection();
 client.aliases = new Collection();
 const db = mongoose.connection;
 
-["command"].forEach(handler => {
-  require(`./handler/${handler}`)(client);
-});
-
 var connectedDB = false;
 
 const userSchema = new mongoose.Schema({
@@ -84,6 +80,10 @@ const guildSchema = new mongoose.Schema({
 guildSchema.plugin(findOrCreate);
 var Guild = mongoose.model('Guild', guildSchema);
 
+["command"].forEach(handler => {
+  require(`./handler/${handler}`)(client);
+});
+
 client.on('ready', () => {
   console.log(`[🤖  ] | Logged in as ${client.user.tag}!`);
   client.user.setPresence({
@@ -116,7 +116,7 @@ client.on('message', async message => {
   if (cmd.length === 0) return;
 
   let command = client.commands.get(cmd);
-  if (!command) command = client.commands.get(client.aliases.get(command));
+  if (!command) command = client.commands.get(client.aliases.get(cmd));
 
   if (command)
       command.run(client, message, args);
