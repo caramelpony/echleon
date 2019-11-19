@@ -1,8 +1,9 @@
 const {Client, RichEmbed, Collection} = require('discord.js');
+require('dotenv').config();
 const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
-const {token, mongoConnect, ownerID, prefix} = require("./config.json");
-mongoose.connect(mongoConnect, {useNewUrlParser: true, useUnifiedTopology: true}).catch(err => {
+const { prefix } = require("./config.json");
+mongoose.connect(process.env.MONGO_CONNECT, {useNewUrlParser: true, useUnifiedTopology: true}).catch(err => {
   console.log("[🛰️  ] [❕] | First database connection!");
 });
 const client = new Client();
@@ -109,7 +110,7 @@ client.on('message', async message => {
   if (!message.content.startsWith(prefix)) return;
   if (!message.member) message.member = await message.guild.fetchMember(message);
 
-  const args = message.content.slice(prefix.length).split(' ');
+  const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const cmd = args.shift().toLowerCase();
 
   if (cmd.length === 0) return;
@@ -195,7 +196,7 @@ process.on('SIGINT', function() {
   process.exit();
 });
 
-client.login(token);
+client.login(process.env.FILLYTOKEN);
 
 /*
   let guildPrefix = prefix;
