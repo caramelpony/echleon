@@ -11,7 +11,7 @@ All Data collected by this bot will eventually be Opt-In, allowing more privacy-
 ### Planned Features and To-Do
 Most planned features should also appear on the Project page as well.
 These aren't in any particular order, but will be moved to the top as they're finished.
-- [x] | Move to RichEmbed for most Bot Responses.
+- [x] | Move to RichEmbed for most bot Responses.
 - [ ] | Add Web Interface to allow for easier management of Server settings.
 - [ ] | Finish `canvas` implementation in order to allow Misc. "Profile Cards" feature.
 - [ ] | Add ability to send feedback to Developers from inside Bot/Web Interface.
