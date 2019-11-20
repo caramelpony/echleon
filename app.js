@@ -13,72 +13,9 @@ const db = mongoose.connection;
 
 var connectedDB = false;
 
-const userSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true
-  },
-  username: String,
-  discriminator: String,
-  avatar: String,
-  bot: Boolean,
-  data: Array
-});
-
-const guildSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true
-  },
-  owner_id: String,
-  permissions: Number,
-  analytics: {
-    features: Array,
-    mfa_level: Number,
-    large: Boolean,
-    unavailable: Boolean,
-    member_count: Number,
-    max_members: Number,
-    verification_level: Number,
-    default_message_notifications: Number,
-    explicit_content_filter: Number,
-    region: String,
-    roles: Array,
-    name: String,
-    icon: String,
-    members: Array,
-    channels: Array,
-    presences: Array
-  },
-  misc: {
-    splash: String,
-    vanity_url_code: String,
-    description: String,
-    banner: String,
-    premium_tier: Number,
-    emojis: Array
-  },
-  bot: {
-    changelog: Boolean,
-    changelogChannel: Number,
-    prefix: String,
-    firstTime: Boolean
-  },
-  logs: {
-    enabled: Boolean,
-    criticalPings: Boolean,
-    criticalRole: String,
-    logChannel: Number,
-    connect: Boolean,
-    disconnect: Boolean,
-    moderation: Boolean,
-    roles: Boolean,
-    settings: Boolean
-  }
-});
-
-guildSchema.plugin(findOrCreate);
-var Guild = mongoose.model('Guild', guildSchema);
+const Owner = require('./models/owner');
+const User = require('./models/user');
+const Guild = require('./models/guild');
 
 ["command"].forEach(handler => {
   require(`./handler/${handler}`)(client);
@@ -95,16 +32,17 @@ client.on('ready', () => {
     });
   //client.user.setActivity(`on ${client.guilds.size} servers!`);
   console.log(`[🤖  ] | Ready to serve on ${client.guilds.size} servers, for ${client.users.size} users.`);
+
+
 });
 
 client.on("error", (e) => console.error("[🤖  ] [❌] | " + e));
 
 client.on("warn", (e) => console.warn("[🤖  ] [⚠️] | " + e));
 
-client.on("debug", (e) => console.info("[🤖  ] [❕] | " + e));
+//client.on("debug", (e) => console.info("[🤖  ] [❕] | " + e));
 
 client.on('message', async message => {
-
   if (message.author.bot) return;
   if (!message.guild) return;
   if (!message.content.startsWith(prefix)) return;
@@ -119,7 +57,7 @@ client.on('message', async message => {
   if (!command) command = client.commands.get(client.aliases.get(cmd));
 
   if (command)
-      command.run(client, message, args);
+      command.run(client, message, args, ownerUser);
 
 });
 

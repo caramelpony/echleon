@@ -1,3 +1,5 @@
+const { getMember, warningEmbed, formatDate } = require("../../functions.js");
+
 module.exports = {
     name: "say",
     aliases: ["bc","broadcast"],
@@ -8,7 +10,10 @@ module.exports = {
         if (message.deletable) message.delete();
 
         if (args.length < 1)
-            return message.reply("Nothing to say?").then(m => m.delete(5000));
+            return message.channel.send(warningEmbed(client,"No message provided!")).then(m => m.delete(5000));
+
+        if (!getMember(message).hasPermission("BAN_MEMBERS"))
+            return message.channel.send(warningEmbed(client,"You don't have permission!")).then(m => m.delete(5000));
 
         const roleColor = message.guild.me.displayHexColor === "#000000" ? "#ffffff" : message.guild.me.displayHexColor;
 

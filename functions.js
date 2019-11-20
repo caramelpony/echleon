@@ -1,3 +1,6 @@
+const { RichEmbed } = require('discord.js');
+const {stripIndents } = require('common-tags');
+
 module.exports = {
     getMember: function(message, toFind = '') {
         toFind = toFind.toLowerCase();
@@ -24,9 +27,12 @@ module.exports = {
         return new Intl.DateTimeFormat('en-US').format(date)
     },
 
-    warningEmbed: function(message) {
+    warningEmbed: function(client, message) {
         const embed = new RichEmbed()
-            .setColor("")
+            .setColor("#ff8200")
+            .setDescription(stripIndents`⚠ \t${message}`);
+
+        return embed;
     }
 
 

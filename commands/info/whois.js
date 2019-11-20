@@ -1,6 +1,6 @@
 const { RichEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
-const { getMember, formatDate } = require("../../functions.js");
+const { getMember, warningEmbed, formatDate } = require("../../functions.js");
 
 module.exports = {
     name: "whois",
@@ -19,6 +19,19 @@ module.exports = {
         // User variables
         const created = formatDate(member.user.createdAt);
 
+        var desktop = 'Offline';
+        var web = 'Offline';
+        var phone = 'Offline';
+
+        if(member.user.presence.clientStatus.phone)
+            phone = member.user.presence.clientStatus.phone[0].toUpperCase() + member.user.presence.clientStatus.phone.slice(1);
+
+        if(member.user.presence.clientStatus.web)
+            web = member.user.presence.clientStatus.web[0].toUpperCase() + member.user.presence.clientStatus.web.slice(1);
+
+        if(member.user.presence.clientStatus.desktop)
+            desktop = member.user.presence.clientStatus.desktop[0].toUpperCase() + member.user.presence.clientStatus.desktop.slice(1);
+
         const embed = new RichEmbed()
             .setFooter(member.displayName, member.user.displayAvatarURL)
             .setThumbnail(member.user.displayAvatarURL)
@@ -33,10 +46,19 @@ module.exports = {
             **Tag**: ${member.user.tag}
             **Created at**: ${created}`, true)
 
+            .addField('Client information:', stripIndents`**Desktop:** ${desktop}
+            **Phone:** ${phone}
+            **Web:** ${web}`,true)
+
             .setTimestamp()
 
-        if (member.user.presence.game)
-            embed.addField('Currently playing', stripIndents`**Name:** ${member.user.presence.game.name}`);
+        if (member.user.presence.game){
+            if(member.user.presence.game.name === "Custom Status") {
+                embed.addField('Currently playing', stripIndents`**Custom Status:** ${member.user.presence.game.state}`,true);
+            } else {
+                embed.addField('Currently playing', stripIndents`**Name:** ${member.user.presence.game.name}`,true);
+            }
+        }
 
         message.channel.send(embed);
     }
