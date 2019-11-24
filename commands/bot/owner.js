@@ -14,8 +14,9 @@ module.exports = {
         console.log(ownerUser);
 
         const embed = new RichEmbed()
-            .setColor(roleColor)
-            .setDescription(`This bot is maintained free of charge, at the expense of the Owner! Please consider donating if it's helped your server~`)
+            //.setColor(roleColor)
+            .setColor('#99e786')
+            .setDescription(stripIndents`This bot is maintained voluntarily. Please consider donating if it's helped your server~`)
             .setTimestamp()
             .setAuthor(ownerUser.username, ownerUser.displayAvatarURL)
             .setThumbnail(ownerUser.displayAvatarURL)
@@ -25,16 +26,13 @@ module.exports = {
             **Username**: ${ownerUser.username}
             **Tag**: ${ownerUser.tag}`, true)
 
-            .addField('Support the Dev:', stripIndents`**Ko-Fi:** https://ko-fi.com/carameldrop
-            **Patreon:** https://patreon.com/carameldrop`, true)
+            .addField('Support the Dev:', stripIndents`**Ko-Fi:** \nhttps://ko-fi.com/carameldrop
+            **Patreon:** \nhttps://patreon.com/carameldrop`, true)
 
-            .addField('Platforms:', stripIndents`**Twitter:** https://twitter.com/ponyidle
+            .addField('Social Platforms:', stripIndents`**Twitter:** https://twitter.com/ponyidle
             **Steam:** https://steamcommunity.com/id/fillyanon
-            **Streaming:** https://candyhorse.live/`,true)
-
-            .addField('UwU', stripIndents`**owo**`, true)
-
-            //**Website**: https://caramel.horse/`
+            **Streaming:** https://candyhorse.live/
+            **Website**: https://caramel.horse/`)
 
         message.channel.send(embed);
 
