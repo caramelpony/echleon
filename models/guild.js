@@ -7,38 +7,33 @@ const guildSchema = new mongoose.Schema({
     required: true
   },
   owner_id: String,
-  permissions: Number,
+  timeOfSnap: Number,
   analytics: {
-    features: Array,
-    mfa_level: Number,
-    large: Boolean,
     unavailable: Boolean,
     member_count: Number,
-    max_members: Number,
-    verification_level: Number,
-    default_message_notifications: Number,
-    explicit_content_filter: Number,
     region: String,
-    roles: Array,
     name: String,
     icon: String,
-    members: Array,
-    channels: Array,
-    presences: Array
-  },
-  misc: {
-    splash: String,
-    vanity_url_code: String,
-    description: String,
-    banner: String,
-    premium_tier: Number,
-    emojis: Array
+    members: [{
+        id: Number,
+        name: String,
+        nick: String,
+        joined: String
+    }],
+    channels: [{
+        id: Number,
+        name: String,
+        chantype: String,
+        position: Number,
+        nsfw: Boolean,
+        topic: String,
+        parent: Number
+    }]
   },
   bot: {
     changelog: Boolean,
     changelogChannel: Number,
-    prefix: String,
-    firstTime: Boolean
+    prefix: String
   },
   logs: {
     enabled: Boolean,
