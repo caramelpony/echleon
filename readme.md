@@ -1,5 +1,5 @@
 # Echleon - Discord Server Analytics
-![GitHub package.json version](https://img.shields.io/github/package-json/v/solemcaelum/echleon) | ![GitHub issues](https://img.shields.io/github/issues/solemcaelum/echleon) | ![GitHub pull requests](https://img.shields.io/github/issues-pr/solemcaelum/echleon) | ![GitHub](https://img.shields.io/github/license/solemcaelum/echleon) | [![donate](https://img.shields.io/badge/donate-KoFi-blue.svg)](https://ko-fi.com/grovkillentder)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/solemcaelum/echleon) | ![GitHub issues](https://img.shields.io/github/issues/solemcaelum/echleon) | ![GitHub pull requests](https://img.shields.io/github/issues-pr/solemcaelum/echleon) | ![GitHub](https://img.shields.io/github/license/solemcaelum/echleon) | [![donate](https://img.shields.io/badge/donate-KoFi-blue.svg)](https://ko-fi.com/carameldrop)
 
 An Open Source attempt to bring analytics into the process of running a Discord Server.
 
@@ -60,7 +60,7 @@ However, if you'd like to submit a Pull Request, I can look it over and merge it
 ### Supporting
 If you like the bot, like the idea, or just want to help out, I'm accepting donations and will use almost all income from them to spend more time working on this and other open source projects.
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V7V818EW0)
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/carameldrop)
 
 #### Developed and Maintained by [SolemCaelum](https://github.com/SolemCaelum)
 [Twitter](https://twitter.com/ponyidle) |

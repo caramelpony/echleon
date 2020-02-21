@@ -1,16 +1,23 @@
 const {Client, RichEmbed, Collection} = require('discord.js');
-const { getMember, warningEmbed, formatDate } = require("./functions.js");
+const { getMember, warningEmbed, formatDate, updateBot } = require("./functions.js");
 require('dotenv').config();
 const mongoose = require('mongoose');
 const moment = require('moment');
 const findOrCreate = require('mongoose-findorcreate');
 const { prefix } = require("./config.json");
+const express = require('express');
+const port = 3000;
 mongoose.connect(process.env.MONGO_CONNECT, {useNewUrlParser: true, useUnifiedTopology: true}).catch(err => {
   console.log("[🛰️  ] [❕] | "+err);
 });
+
+const fs = require('fs');
+
 const client = new Client();
 client.commands = new Collection();
 client.aliases = new Collection();
+client.categories = fs.readdirSync('./commands/');
+client.cooldowns = new Collection();
 const db = mongoose.connection;
 
 var connectedDB = false;
@@ -67,18 +74,30 @@ async function syncGuild(guildObject){
   foundGuild.save(err => {
       if(err) console.log(err);
   });
+};
+
+async function updatePresence(){
+  client.user.setPresence({ game: { name: ` ${client.guilds.size} servers!`, type: 'WATCHING' }, status: 'online' })
+    .then(console.log(`[🤖  ] | Activity updated.`))
+    .catch(console.error);
+};
+
+async function update(){
+  await updateBot()
+    .then(function (res) {
+        if (res == true){
+          console.log("\x1b[31m\x1b[0m","Bot Update Detected!");
+        } else {
+          return;
+        }
+    });
 }
+
+update();
 
 client.on('ready', () => {
   console.log(`[🤖  ] | Logged in as ${client.user.tag}!`);
-  client.user.setPresence({
-        game: {
-            name: ` ${client.guilds.size} servers!`,
-            type: 'WATCHING'
-        },
-        status: 'online'
-    });
-
+  updatePresence();
   console.log(`[🤖  ] | Ready to serve on ${client.guilds.size} servers, for ${client.users.size} users.`);
 
   client.guilds.forEach(guild => {
@@ -86,23 +105,9 @@ client.on('ready', () => {
       if (created) {
         console.log(`[🤖  ] | New server Discovered! \"${guild.name}\".`);
         syncGuild(guild);
-        client.user.setPresence({
-              game: {
-                  name: ` ${client.guilds.size} servers!`,
-                  type: 'WATCHING'
-              },
-              status: 'online'
-          });
       } else {
         console.log(`[🤖  ] | Re-Discovered server! \"${guild.name}\".`);
         syncGuild(guild);
-        client.user.setPresence({
-              game: {
-                  name: ` ${client.guilds.size} servers!`,
-                  type: 'WATCHING'
-              },
-              status: 'online'
-          });
       }
     });
   });
@@ -148,23 +153,11 @@ client.on("guildCreate", (guild) => {
     if (created) {
       console.log(`[🤖  ] | New server Discovered! "${guild.name}".`);
       syncGuild(guild, true);
-      client.user.setPresence({
-            game: {
-                name: ` ${client.guilds.size} servers!`,
-                type: 'WATCHING'
-            },
-            status: 'online'
-        });
+      updatePresence();
     } else {
       console.log(`[🤖  ] | Re-Discovered server! "${guild.name}".`);
       syncGuild(guild, true);
-      client.user.setPresence({
-            game: {
-                name: ` ${client.guilds.size} servers!`,
-                type: 'WATCHING'
-            },
-            status: 'online'
-        });
+      updatePresence();
     }
   });
 });
@@ -249,6 +242,16 @@ process.on('SIGINT', function() {
 });
 
 client.login(process.env.FILLYTOKEN);
+
+const app = express();
+console.log("[Express] | Starting Dashboard.");
+
+app.get('/', function (req, res) {
+  res.send('Hello World');
+  console.log("[Express] | GET Request from:", req.ip)
+})
+
+app.listen(port, () => console.log(`[Express] | Started Dashboard on port ${port}!`))
 
 /*
   let guildPrefix = prefix;

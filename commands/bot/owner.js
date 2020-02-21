@@ -4,14 +4,12 @@ const { getMember, warningEmbed, formatDate } = require("../../functions.js");
 
 module.exports = {
     name: "owner",
-    aliases: ["owned","master"],
+    aliases: ["owned","master", "own"],
     category: "bot",
     description: "Bot's Maintainer.",
     run: async (client, message, args) => {
         let ownerUser = await client.fetchUser(process.env.OWNER);
         const roleColor = message.guild.me.displayHexColor === "#000000" ? "#ffffff" : message.guild.me.displayHexColor;
-
-        console.log(ownerUser);
 
         const embed = new RichEmbed()
             //.setColor(roleColor)

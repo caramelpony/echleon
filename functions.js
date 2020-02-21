@@ -1,5 +1,7 @@
 const { RichEmbed } = require('discord.js');
 const {stripIndents } = require('common-tags');
+const axios = require('axios');
+const { version } = require('./package.json');
 
 module.exports = {
     getMember: function(message, toFind = '') {
@@ -33,6 +35,21 @@ module.exports = {
             .setDescription(stripIndents`⚠ \t${message}`);
 
         return embed;
+    },
+
+    updateBot: async function(){
+      try {
+        const response = await axios.get('https://github.com/solemcaelum/echleon/blob/master/package.json');
+        console.log(`${response}`);
+        console.log(`${response.version} : ${version}`);
+        if ( response.version > version){
+          return true;
+        } else {
+          return false;
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
 
 }
