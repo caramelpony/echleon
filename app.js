@@ -279,32 +279,6 @@ process.on('SIGINT', function() {
 });
 
 
-// Websocket section for CC Interaction
-
-wss.on('connection', function connection(ws) {
-  ws.on('message', function incoming(message) {
-      const caramel = "498064733925146635"
-      const penny = "218510894680899584"
-      const sydney = "230019681539457024"
-      const args = message.split(/ +/);
-      const command = args.shift().toLowerCase();
-      if (command === "caramel"){
-        client.users.get(caramel).send(args.join(" "));
-        ws.send("Message sent to Caramel!")
-      } else if (command === "penny"){
-        client.users.get(penny).send(args.join(" "));
-        ws.send("Message sent to Penny!")
-      } else if (command === "sydney"){
-        client.users.get(sydney).send(args.join(" "));
-        ws.send("Message sent to Penny!")
-      } else {
-        ws.send("Error!")
-      }
-  });
-
-  ws.send('Connected!');
-});
-
 client.login(process.env.FILLYTOKEN);
 
 const app = express();
