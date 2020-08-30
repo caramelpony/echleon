@@ -7,6 +7,9 @@ const findOrCreate = require('mongoose-findorcreate');
 const { prefix } = require("./config.json");
 const express = require('express');
 const port = 3000;
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 80 });
+
 mongoose.connect(process.env.MONGO_CONNECT, {useNewUrlParser: true, useUnifiedTopology: true}).catch(err => {
   console.log("[🛰️  ] [❕] | "+err);
 });
@@ -25,6 +28,7 @@ var connectedDB = false;
 const Owner = require('./models/owner');
 const User = require('./models/user');
 const Guild = require('./models/guild');
+const { stripIndents } = require('common-tags');
 
 ["command"].forEach(handler => {
   require(`./handler/${handler}`)(client);
@@ -76,6 +80,36 @@ async function syncGuild(guildObject){
   });
 };
 
+function presentTOS(guild){
+  const channel = guild.channels.find(channel => channel.name === "general");;
+  const roleColor = guild.me.displayHexColor === "#000000" ? "#ffffff" : guild.me.displayHexColor;
+
+  const embed = new RichEmbed()
+        //.setColor(roleColor)
+        .setColor('#99e786')
+        .setTitle(stripIndents`Echleon - Discord Server Analytics`)
+        .setDescription(stripIndents`Echleon is built with Analytics, and control in mind. It strives to give you the information and tools to fully manage and grow your servers.`)
+        .setTimestamp()
+        .setAuthor(client.user.username, client.user.displayAvatarURL)
+        .setThumbnail(client.user.displayAvatarURL)
+        .setFooter(`${client.user.username} - ${Math.round(client.ping)}ms Latency`, client.user.displayAvatarURL)
+        .addField('Terms:', stripIndents`Server, Channel, and Memeber information
+        is collected and processed to create analytical information.
+        Most of this data is collected with privacy in mind, but we still want to
+        confirm server administration's consent.`, true)
+
+        .addField('Instructions:', stripIndents`None needed! You consented to these terms by adding the bot to your server.
+        You can also use \`=owner\` to learn more about the developer.`, true)
+
+        .addField('Website:', stripIndents`**Github**: https://github.com/solemcaelum/echleon`)
+  if(channel) {
+      channel.send(embed);
+      syncGuild(guild);
+  } else {
+      syncGuild(guild);
+  }
+}
+
 async function updatePresence(){
   client.user.setPresence({ game: { name: ` ${client.guilds.size} servers!`, type: 'WATCHING' }, status: 'online' })
     .then(console.log(`[🤖  ] | Activity updated.`))
@@ -104,7 +138,8 @@ client.on('ready', () => {
     Guild.findOrCreate({ id: guild.id }, { name: guild.name }, async function(err, foundGuild, created){
       if (created) {
         console.log(`[🤖  ] | New server Discovered! \"${guild.name}\".`);
-        syncGuild(guild);
+        presentTOS(guild)
+        syncGuild(guild)
       } else {
         console.log(`[🤖  ] | Re-Discovered server! \"${guild.name}\".`);
         syncGuild(guild);
@@ -152,11 +187,13 @@ client.on("guildCreate", (guild) => {
   Guild.findOrCreate({ id: guild.id }, { name: guild.name }, async function(err, foundGuild, created){
     if (created) {
       console.log(`[🤖  ] | New server Discovered! "${guild.name}".`);
-      syncGuild(guild, true);
+      presentTOS(guild);
+      syncGuild(guild)
       updatePresence();
+
     } else {
       console.log(`[🤖  ] | Re-Discovered server! "${guild.name}".`);
-      syncGuild(guild, true);
+      syncGuild(guild);
       updatePresence();
     }
   });
@@ -241,6 +278,33 @@ process.on('SIGINT', function() {
   process.exit();
 });
 
+
+// Websocket section for CC Interaction
+
+wss.on('connection', function connection(ws) {
+  ws.on('message', function incoming(message) {
+      const caramel = "498064733925146635"
+      const penny = "218510894680899584"
+      const sydney = "230019681539457024"
+      const args = message.split(/ +/);
+      const command = args.shift().toLowerCase();
+      if (command === "caramel"){
+        client.users.get(caramel).send(args.join(" "));
+        ws.send("Message sent to Caramel!")
+      } else if (command === "penny"){
+        client.users.get(penny).send(args.join(" "));
+        ws.send("Message sent to Penny!")
+      } else if (command === "sydney"){
+        client.users.get(sydney).send(args.join(" "));
+        ws.send("Message sent to Penny!")
+      } else {
+        ws.send("Error!")
+      }
+  });
+
+  ws.send('Connected!');
+});
+
 client.login(process.env.FILLYTOKEN);
 
 const app = express();
@@ -250,6 +314,7 @@ app.get('/', function (req, res) {
   res.send('Hello World');
   console.log("[Express] | GET Request from:", req.ip)
 })
+
 
 app.listen(port, () => console.log(`[Express] | Started Dashboard on port ${port}!`))
 

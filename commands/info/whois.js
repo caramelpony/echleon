@@ -4,6 +4,7 @@ const { getMember, warningEmbed, formatDate } = require("../../functions.js");
 
 module.exports = {
     name: "whois",
+    category: "info",
     aliases: ["who", "user", "info"],
     description: "Returns user information",
     usage: "[username | id | mention]",

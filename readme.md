@@ -24,6 +24,8 @@ These aren't in any particular order, but will be moved to the top as they're fi
 - [ ] | Make bot cute?
 
 ### Dependencies
+Kind of already outdated list, but you get the general premise.
+
 * ascii-table "0.0.9"
 * canvas "^2.6.0"
 * common-tags "^1.8.0"

@@ -28,7 +28,7 @@ module.exports = {
             **Patreon:** \nhttps://patreon.com/carameldrop`, true)
 
             .addField('Social Platforms:', stripIndents`**Twitter:** https://twitter.com/ponyidle
-            **Steam:** https://steamcommunity.com/id/fillyanon
+            **Steam:** https://steamcommunity.com/id/carameldrop
             **Streaming:** https://candyhorse.live/
             **Website**: https://caramel.horse/`)
 
