@@ -1,10 +1,9 @@
 {
   "name": "echleon",
-  "engines" : 
-    { 
-      "node" : ">=14.8.0" 
-    },
-  "version": "1.0.1",
+  "engines": {
+    "node": ">=14.8.0"
+  },
+  "version": "1.1.0",
   "description": "A bot aiming to change Discord's experience.",
   "repository": "https://github.com/solemcaelum/echleon",
   "main": "app.js",
