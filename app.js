@@ -7,8 +7,6 @@ const findOrCreate = require('mongoose-findorcreate');
 const { prefix } = require("./config.json");
 const express = require('express');
 const port = 3000;
-const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 80 });
 
 mongoose.connect(process.env.MONGO_CONNECT, {useNewUrlParser: true, useUnifiedTopology: true}).catch(err => {
   console.log("[🛰️  ] [❕] | "+err);
