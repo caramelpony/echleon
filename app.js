@@ -1,5 +1,5 @@
 const {Client, RichEmbed, Collection} = require('discord.js');
-const { getMember, warningEmbed, formatDate, updateBot } = require("./functions.js");
+const { getMember, warningEmbed, formatDate, updateBot, syncGuild, syncUser } = require("./functions.js");
 require('dotenv').config();
 const mongoose = require('mongoose');
 const moment = require('moment');
@@ -32,51 +32,6 @@ const { stripIndents } = require('common-tags');
   require(`./handler/${handler}`)(client);
 });
 
-async function syncGuild(guildObject){
-  let time = moment().unix();
-  foundGuild = await Guild.findOne({ id: guildObject.id }).catch(err => {
-    console.log("[🛰️  ] [❕] | "+err);
-  });
-  foundGuild.timeOfSnap = time;
-  foundGuild.analytics.name = guildObject.name;
-  foundGuild.analytics.icon = guildObject.iconURL;
-  foundGuild.analytics.region = guildObject.region;
-  foundGuild.analytics.member_count = guildObject.memberCount;
-  foundGuild.analytics.unavailable = guildObject.available;
-  foundGuild.analytics.members = [];
-  guildObject.members.forEach(member => {
-      foundGuild.analytics.members.push({
-        id: member.id,
-        name: member.user.username,
-        nick: member.nick,
-        joined: formatDate(member.joinedAt)
-      });
-  });
-  foundGuild.analytics.channels = [];
-  guildObject.channels.forEach(channel => {
-      let parent = 0;
-      if (channel.parentID)
-        parent = channel.parentID;
-      let topic = "";
-      if (channel.topic)
-        topic = channel.topic;
-      let nsfw = false;
-      if (channel.nsfw)
-        nsfw = channel.nsfw;
-      foundGuild.analytics.channels.push({
-        id: Number(channel.id),
-        name: channel.name,
-        chantype: channel.type,
-        position: channel.position,
-        nsfw: nsfw,
-        topic: topic,
-        parent: parent
-      });
-  });
-  foundGuild.save(err => {
-      if(err) console.log(err);
-  });
-};
 
 function presentTOS(guild){
   const channel = guild.channels.find(channel => channel.name === "general");;
@@ -131,6 +86,18 @@ client.on('ready', () => {
   console.log(`[🤖  ] | Logged in as ${client.user.tag}!`);
   updatePresence();
   console.log(`[🤖  ] | Ready to serve on ${client.guilds.size} servers, for ${client.users.size} users.`);
+
+  client.users.forEach(user => {
+    User.findOrCreate({id: user.id}, { username: user.username }, async function(err, foundGuild, created){
+      if (created) {
+        console.log(`New user added to database! ID: ${user.id} | Username: ${user.username}`);
+        syncUser(user);
+      } else {
+        console.log(`User Exists! Updating database! ID: ${user.id} | Username: ${user.username}`);
+        syncUser(user);
+      }
+    });
+  });
 
   client.guilds.forEach(guild => {
     Guild.findOrCreate({ id: guild.id }, { name: guild.name }, async function(err, foundGuild, created){
