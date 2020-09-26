@@ -3,7 +3,7 @@
   "engines": {
     "node": ">=14.8.0"
   },
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "A bot aiming to change Discord's experience.",
   "repository": "https://github.com/solemcaelum/echleon",
   "main": "app.js",
@@ -27,6 +27,7 @@
     "moment": "^2.24.0",
     "mongoose": "^5.7.11",
     "mongoose-findorcreate": "^3.0.0",
+    "node-canvas-with-twemoji": "^0.1.2",
     "node-opus": "^0.3.3",
     "opusscript": "0.0.7",
     "sodium": "^3.0.2",
