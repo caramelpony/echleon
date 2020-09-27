@@ -8,10 +8,17 @@ module.exports = {
     usage: "pr <new | delete | invite | kick> [username | id | mention]",
     run: async (client, message, args) => {
         (async () => {
+
+            // Simplify "message.guild" to server.
             var server = message.guild;
+
+            // Find category in which to parent all of the private channels.
             let category = server.channels.find(c => c.name == "Private Channels" && c.type == "category");
-            console.log("Executed private room command!");
+
+            // Find mentioned/target member for command.
             const member = getMember(message);
+
+            // Random String function
             function randomString(length, chars) {
                 var mask = '';
                 if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
@@ -91,6 +98,9 @@ module.exports = {
                 if (message.channel.parent != category) {
                     return message.channel.send(warningEmbed(client,"Please execute this command in the channel you're trying to delete.")).then(m => m.delete(5000));
                 }
+
+                // We now proceed to delete the ***role first*** then the channel, on a delay.
+                // Role is deleted first for simplicity's sake.
                 function deleteChannel() {
                     server.roles.find(role => role.name === message.channel.name).delete();
                     message.channel.delete();
@@ -98,12 +108,15 @@ module.exports = {
                 message.channel.send(warningEmbed(client,`${member.user.username} has requested this channel be deleted! ***60*** seconds remaining until deletion. This can not be cancelled.`));
                 setTimeout(deleteChannel, 60000);
             } else if (args[0] == "invite" || args[0] == "i" || args[0] == "inv") {
+                // Make sure that command is being executed in the target channel.
                 if (message.channel.parent != category) {
                     return message.channel.send(warningEmbed(client,"Please execute this command in the channel you're trying to invite someone to.")).then(m => m.delete(5000));
                 }
+                // Determine if there's a user to invite.
                 if (args.length < 2) {
                     return message.channel.send(warningEmbed(client,"Please mention a user to invite!")).then(m => m.delete(5000));
                 }
+                // Determine user.
                 function findInvitee(targetMember) {
 
                     if (message.mentions.members) {
@@ -114,21 +127,28 @@ module.exports = {
 
                     return target;
                 }
+                // Identify user.
                 let foundMember = findInvitee(client, args[1]);
+                // Identify role.
                 let foundRole = server.roles.find(role => role.name === message.channel.name);
+                // Add role to the aforementioned user.
                 if (foundMember != null) {
                     foundMember.addRole(foundRole, "Assigned private role.")
                                   .catch(error => console.log(error));
                 } else {
+                    // Unknown Error. Don't really know why this would fail. Don't care to.
                     return message.channel.send(warningEmbed(client,"Unkown Error!")).then(m => m.delete(5000));
                 }
             } else if (args[0] == "kick" || args[0] == "k" || args[0] == "remove" || args[0] == "r" || args[0] == "rem") {
+                // Make sure that command is being executed in the target channel.// Make
                 if (message.channel.parent != category) {
                     return message.channel.send(warningEmbed(client,"Please execute this command in the channel you're trying to kick someone from.")).then(m => m.delete(5000));
                 }
+                // Make sure command is targetting user.
                 if (args.length < 2) {
                     return message.channel.send(warningEmbed(client,"Please mention a user to kick!")).then(m => m.delete(5000));
                 }
+                // Locate user.
                 function findInvitee(targetMember) {
 
                     if (message.mentions.members) {
@@ -139,8 +159,11 @@ module.exports = {
 
                     return target;
                 }
+                // Identify user.
                 let foundMember = findInvitee(client, args[1]);
+                // Identify role.
                 let foundRole = server.roles.find(role => role.name === message.channel.name);
+                // Remove role, hence kicking the user.
                 if (foundMember != null) {
                     foundMember.removeRole(foundRole, "Removed private role.")
                                   .catch(error => console.log(error));
