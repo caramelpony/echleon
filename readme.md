@@ -1,5 +1,5 @@
 # Echleon - Discord Server Analytics
-![GitHub package.json version](https://img.shields.io/github/package-json/v/solemcaelum/echleon) | ![GitHub issues](https://img.shields.io/github/issues/solemcaelum/echleon) | ![GitHub pull requests](https://img.shields.io/github/issues-pr/solemcaelum/echleon) | ![GitHub](https://img.shields.io/github/license/solemcaelum/echleon) | [![donate](https://img.shields.io/badge/donate-KoFi-blue.svg)](https://ko-fi.com/carameldrop)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/solemcaelum/echleon) | ![GitHub issues](https://img.shields.io/github/issues/solemcaelum/echleon) | ![GitHub pull requests](https://img.shields.io/github/issues-pr/solemcaelum/echleon) | ![GitHub](https://img.shields.io/github/license/solemcaelum/echleon) | [![donate](https://img.shields.io/badge/donate-KoFi-blue.svg)](https://ko-fi.com/carameldrop) | [![BCH compliance](https://bettercodehub.com/edge/badge/solemcaelum/echleon?branch=master)](https://bettercodehub.com/)
 
 An Open Source attempt to bring analytics into the process of running a Discord Server.
 
@@ -12,8 +12,8 @@ All Data collected by this bot will eventually be Opt-In, allowing more privacy-
 Most planned features should also appear on the Project page as well.
 These aren't in any particular order, but will be moved to the top as they're finished.
 - [x] | Move to RichEmbed for most bot Responses.
+- [x] | Finish `canvas` implementation in order to allow Misc. "Profile Cards" feature.
 - [ ] | Add Web Interface to allow for easier management of Server settings.
-- [ ] | Finish `canvas` implementation in order to allow Misc. "Profile Cards" feature.
 - [ ] | Add ability to send feedback to Developers from inside Bot/Web Interface.
 - [ ] | Improve consistency, cleanup codebase, and **optimize**.
 - [ ] | Implement Voice Support for music, and audio features.
@@ -26,14 +26,24 @@ These aren't in any particular order, but will be moved to the top as they're fi
 ### Dependencies
 Kind of already outdated list, but you get the general premise.
 
-* ascii-table "0.0.9"
-* canvas "^2.6.0"
-* common-tags "^1.8.0"
-* discord.js "^11.5.1"
-* dotenv "^8.2.0"
-* mongoose "^5.7.11"
-* mongoose-findorcreate "^3.0.0"
-* node-opus "^0.3.3"
+* `ascii-table`: "0.0.9"
+* `axios`: "^0.21.1"
+* `bufferutil`: "^4.0.1"
+* `canvas`: "^2.6.0"
+* `common-tags`: "^1.8.0"
+* `discord.js`: "^11.5.1"
+* `dotenv`: "^8.2.0"
+* `erlpack`: "^0.1.3"
+* `express`: "^4.17.1"
+* `libsodium-wrappers`: "^0.7.6"
+* `moment`: "^2.24.0"
+* `mongoose`: "^5.7.11"
+* `mongoose-findorcreate`: "^3.0.0"
+* `node-canvas-with-twemoji`: "^0.1.2"
+* `node-opus`: "^0.3.3"
+* `opusscript`: "0.0.7"
+* `sodium`: "^3.0.2"
+* `uws`: "^100.0.1"
 
 ### Requirements
 MongoDB Server, and Node.JS (^10.17.0) pre-installed.
@@ -46,6 +56,8 @@ MongoDB Server, and Node.JS (^10.17.0) pre-installed.
 * If you're developing/contributing, considering installing `nodemon` and using the `npm test` script so your instance will restart upon file saves.
 
 * If you're new to development, consider using Atom. It's a wonderful program and with the right set of addons, can work wonders for JavaScript developers old and new. It simplifies your workflow, keeps things organized, and is simple enough to move to from Notepad++.
+
+* If you're looking to improve your workflow, consider using VSCode on MacOS :)
 
 #### Example `.env` File
 ```env
