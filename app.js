@@ -8,8 +8,8 @@ const { prefix } = require("./config.json");
 const express = require('express');
 const port = 3000;
 
-mongoose.connect(process.env.MONGO_CONNECT, {useNewUrlParser: true, useUnifiedTopology: true}).catch(err => {
-  console.log("[🛰️  ] [❕] | "+err);
+mongoose.connect(process.env.MONGO_CONNECT).catch(e => {
+  console.log("[🛰️  ] [❕] | "+e);
 });
 
 const fs = require('fs');

@@ -99,6 +99,11 @@ module.exports = {
                     return message.channel.send(warningEmbed(client,"Please execute this command in the channel you're trying to delete.")).then(m => m.delete(5000));
                 }
 
+                if (message.channel.parent == category && message.channel.parent.name == "Private Channels") {
+                    return message.channel.send(warningEmbed(client,"Please execute this command in the channel you're trying to delete.")).then(m => m.delete(5000));
+                }
+
+
                 // We now proceed to delete the ***role first*** then the channel, on a delay.
                 // Role is deleted first for simplicity's sake.
                 function deleteChannel() {

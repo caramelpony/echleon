@@ -4,9 +4,9 @@ const axios = require('axios');
 const { version } = require('./package.json');
 const moment = require('moment');
 
-const Owner = require('./models/owner');
-const User = require('./models/user');
-const Guild = require('./models/guild');
+const Owner = require('./models/owner.js');
+const User = require('./models/user.js');
+const Guild = require('./models/guild.js');
 
 module.exports = {
     getMember: function(message, toFind = '') {
