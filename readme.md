@@ -1,4 +1,5 @@
 # Echleon - Discord Server Analytics
+## This Project is on hiatus and incomplete!
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/solemcaelum/echleon) | ![GitHub issues](https://img.shields.io/github/issues/solemcaelum/echleon) | ![GitHub pull requests](https://img.shields.io/github/issues-pr/solemcaelum/echleon) | ![GitHub](https://img.shields.io/github/license/solemcaelum/echleon) | [![donate](https://img.shields.io/badge/donate-KoFi-blue.svg)](https://ko-fi.com/carameldrop) | [![BCH compliance](https://bettercodehub.com/edge/badge/solemcaelum/echleon?branch=master)](https://bettercodehub.com/)
 
 An Open Source attempt to bring analytics into the process of running a Discord Server.
