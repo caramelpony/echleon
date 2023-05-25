@@ -77,8 +77,7 @@ If you like the bot, like the idea, or just want to help out, I'm accepting dona
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/carameldrop)
 
-#### Developed and Maintained by [SolemCaelum](https://github.com/SolemCaelum)
+#### Developed and Maintained by [CaramelPony](https://github.com/caramelpony)
 [Twitter](https://twitter.com/ponyidle) |
 [Website](https://caramel.horse/) |
-[Patreon](https://patreon.com/carameldrop) |
 [Ko-Fi](https://ko-fi.com/carameldrop)
