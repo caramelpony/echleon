@@ -22,7 +22,7 @@
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
     "erlpack": "^0.1.3",
-    "express": "^4.17.3",
+    "express": "^4.21.0",
     "libsodium-wrappers": "^0.7.6",
     "moment": "^2.24.0",
     "mongoose": "^5.7.11",
