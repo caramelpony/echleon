@@ -25,7 +25,7 @@
     "express": "^4.17.3",
     "libsodium-wrappers": "^0.7.6",
     "moment": "^2.24.0",
-    "mongoose": "^5.7.11",
+    "mongoose": "^5.13.20",
     "mongoose-findorcreate": "^3.0.0",
     "node-canvas-with-twemoji": "^0.1.2",
     "node-opus": "^0.3.3",
