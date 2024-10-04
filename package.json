@@ -24,7 +24,7 @@
     "erlpack": "^0.1.3",
     "express": "^4.17.3",
     "libsodium-wrappers": "^0.7.6",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.7.11",
     "mongoose-findorcreate": "^3.0.0",
     "node-canvas-with-twemoji": "^0.1.2",
